@@ -1,10 +1,11 @@
-import os
-
 from utils.utils import create_table
 from utils.utils import fill_in_table
 from src.db_manager import DBManager
 
+import os
+
 PG_KEY: str = os.getenv('POSTGRESSQL_KEY')
+
 
 def main():
     """Код для проверки работоспособности программы"""

@@ -3,6 +3,7 @@ import os
 import requests
 import psycopg2
 
+PG_KEY = os.getenv('POSTGRESSQL_KEY')
 
 employer_dict = {}
 employers_data = []
@@ -12,7 +13,7 @@ vacancies_emp = []
 def get_employer(employer):
     """Получение данных c HeadHunter.ru о работодателе."""
     url = 'https://api.hh.ru/employers'
-    PG_KEY: str = os.getenv('POSTGRESSQL_KEY')
+    #PG_KEY = os.getenv('POSTGRESSQL_KEY')
     params = {
         "per_page": 10,
         "text": {employer},  # поиск по названию работодателя.
@@ -79,7 +80,7 @@ print(get_vacancies('1373'))
 def create_table():
     """SQL. Создание БД и таблиц."""
     conn = psycopg2.connect(host="localhost", database="postgres",
-                            user="postgres", password="PG_KEY")
+                            user="postgres", password=PG_KEY)
     conn.autocommit = True
     cur = conn.cursor()
 
@@ -90,7 +91,7 @@ def create_table():
     conn.close()
 
     conn = psycopg2.connect(host="localhost", database="hh_employers_db",
-                            user="postgres", password="PG_KEY")
+                            user="postgres", password=PG_KEY)
     with conn.cursor() as cur:
         cur.execute(f"""CREATE TABLE employers
                       (employer_id int PRIMARY KEY,
@@ -114,7 +115,7 @@ def create_table():
 def fill_in_table(employers_list):
     """SQL. Заполнение таблиц данными."""
     with psycopg2.connect(host="localhost", database="hh_employers_db",
-                          user="postgres", password="PG_KEY", encoding='utf-8') as conn:
+                          user="postgres", password=PG_KEY) as conn:
         with conn.cursor() as cur:
             cur.execute('TRUNCATE TABLE employers, vacancies RESTART IDENTITY;')
 
