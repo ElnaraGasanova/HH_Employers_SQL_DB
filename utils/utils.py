@@ -80,7 +80,7 @@ print(get_vacancies('1373'))
 def create_table():
     """SQL. Создание БД и таблиц."""
     conn = psycopg2.connect(host="localhost", database="postgres",
-                            user="postgres", password=PG_KEY)
+                            user="postgres", password=PG_KEY, client_encoding="latin-1")
     conn.autocommit = True
     cur = conn.cursor()
 
@@ -91,7 +91,7 @@ def create_table():
     conn.close()
 
     conn = psycopg2.connect(host="localhost", database="hh_employers_db",
-                            user="postgres", password=PG_KEY)
+                            user="postgres", password=PG_KEY, client_encoding="latin-1")
     with conn.cursor() as cur:
         cur.execute(f"""CREATE TABLE employers
                       (employer_id int PRIMARY KEY,

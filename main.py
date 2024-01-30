@@ -3,6 +3,7 @@ from utils.utils import fill_in_table
 from src.db_manager import DBManager
 
 import os
+import psycopg2
 
 PG_KEY: str = os.getenv('POSTGRESSQL_KEY')
 
